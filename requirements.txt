@@ -1,0 +1,5 @@
+python_speech_features==0.6
+PyAudio==0.2.11
+scipy==1.7.0
+numpy==1.19.5
+scikit_learn==0.24.2
