@@ -54,7 +54,7 @@ def record_audio_train():
         RATE = 44100
         CHUNK = 512
         RECORD_SECONDS = 10
-        device_index = 2
+        # device_index = 2
         audio = pyaudio.PyAudio()
         print("----------------------record device list---------------------")
         info = audio.get_host_api_info_by_index(0)
@@ -95,7 +95,7 @@ def record_audio_test():
     RATE = 44100
     CHUNK = 512
     RECORD_SECONDS = 10
-    device_index = 2
+    # device_index = 2
     audio = pyaudio.PyAudio()
     print("----------------------record device list---------------------")
     info = audio.get_host_api_info_by_index(0)
@@ -135,12 +135,15 @@ def train_model():
     dest = "trained_models/"
     train_file = "training_set_addition.txt"
     file_paths = open(train_file, 'r')
+    print(file_paths)
 
     count = 1
     features = np.asarray(())
+    pathcount = 0
     for path in file_paths:
         path = path.strip()
         print(path)
+        pathcount += 1
 
         sr, audio = read(source + path)
         print(sr)
@@ -151,7 +154,7 @@ def train_model():
         else:
             features = np.vstack((features, vector))
 
-        if count >1:
+        if count == 1:
             print("in if condition")
             gmm = GaussianMixture(n_components=6, max_iter=200, covariance_type='diag', n_init=3)
             gmm.fit(features)
@@ -204,13 +207,13 @@ def test_model():
 while True:
     choice = int(
         input("\n 1.Record audio for training \n 2.Train Model \n 3.Record audio for testing \n 4.Test Model\n"))
-    if (choice == 1):
+    if choice == 1:
         record_audio_train()
-    elif (choice == 2):
+    elif choice == 2:
         train_model()
-    elif (choice == 3):
+    elif choice == 3:
         record_audio_test()
-    elif (choice == 4):
+    elif choice == 4:
         test_model()
-    if (choice > 4):
+    if choice > 4:
         exit()
